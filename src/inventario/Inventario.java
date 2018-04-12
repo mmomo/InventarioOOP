@@ -31,7 +31,10 @@ public class Inventario {
                 if (valores[0].equals(String.valueOf(Producto.Tipo.ACCESORIO))) {
                     this.productos.add(new Accesorio(valores[1], valores[2], 
                             Double.parseDouble(valores[3]), Integer.parseInt(valores[4])));
-                }                
+                } else if (valores[0].equals(String.valueOf(Producto.Tipo.COMPUTADORA))) {
+                    this.productos.add(new Computadora(valores[1], valores[2],
+                            Double.parseDouble(valores[3]), Integer.parseInt(valores[4])));
+                }               
             }
             
         } catch (FileNotFoundException e) {
