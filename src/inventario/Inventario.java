@@ -16,6 +16,8 @@ public class Inventario {
     private BufferedReader f ;
     private BufferedWriter writer;
     private String linea = "";
+    
+    private double costoTotal;
 
     public Inventario(String archivo) throws IOException {
         this.archivo = archivo;
@@ -29,10 +31,10 @@ public class Inventario {
                 String [] valores = linea.split(",");
                 
                 if (valores[0].equals(String.valueOf(Producto.Tipo.ACCESORIO))) {
-                    this.productos.add(new Accesorio(valores[1], valores[2], 
+                    this.productos.add(new Accesorio(Integer.parseInt(valores[5]), valores[1], valores[2], 
                             Double.parseDouble(valores[3]), Integer.parseInt(valores[4])));
                 } else if (valores[0].equals(String.valueOf(Producto.Tipo.COMPUTADORA))) {
-                    this.productos.add(new Computadora(valores[1], valores[2],
+                    this.productos.add(new Computadora(Integer.parseInt(valores[5]), valores[1], valores[2],
                             Double.parseDouble(valores[3]), Integer.parseInt(valores[4])));
                 }               
             }
@@ -42,11 +44,14 @@ public class Inventario {
             System.out.println("=> Generando archivo " + this.archivo);
          
             writer = new BufferedWriter(new FileWriter(this.archivo));
-            writer.write("Hola Manolo\n");
             writer.close();
             
             System.out.println("Listo");            
         }
+    }
+    
+    public double getCostoTotal () {
+        return this.costoTotal;
     }
     
     public void agregarProducto (Producto p) {
@@ -75,6 +80,8 @@ public class Inventario {
             writer.write(String.valueOf(p.getCosto()));
             writer.write(",");
             writer.write(String.valueOf(p.getCantidad()));
+            writer.write(",");
+            writer.write(String.valueOf(p.getID()));
             writer.write("\n");
         }
         writer.close();

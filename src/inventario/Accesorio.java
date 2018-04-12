@@ -3,8 +3,8 @@ package inventario;
 
 public class Accesorio extends Producto implements Vender{
 
-    public Accesorio(String nombre, String marca, double costo, int cantidad) {
-        super(nombre, marca, costo, cantidad);
+    public Accesorio(int id, String nombre, String marca, double costo, int cantidad) {
+        super(id, nombre, marca, costo, cantidad);
         this.tipo = Tipo.ACCESORIO;
     }
 

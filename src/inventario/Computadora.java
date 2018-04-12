@@ -3,8 +3,9 @@ package inventario;
 
 public class Computadora extends Producto implements Vender {
     
-    public Computadora (String nombre, String marca, double costo, int cantidad) {
-        super(nombre, marca, costo, cantidad);
+    public Computadora (int id, String nombre, String marca, double costo, int cantidad) {
+        super(id, nombre, marca, costo, cantidad);
+        this.tipo = Tipo.COMPUTADORA;
     }
     
     @Override

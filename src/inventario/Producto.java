@@ -6,17 +6,23 @@ public abstract class Producto {
         COMPUTADORA
     }
 
+    private final int ID;
     private String nombre;
     private String marca;
     private double costo;
     private int cantidad;
     public Tipo tipo;
 
-    public Producto(String nombre, String marca, double costo, int cantidad) {
-        this.nombre = nombre;
+    public Producto(int id, String nombre, String marca, double costo, int cantidad) {
+        this.ID = id;
+        this.nombre = nombre;        
         this.marca = marca;
         this.costo = costo;
         this.cantidad = cantidad;
+    }
+    
+    public int getID () {
+        return this.ID;
     }
 
     public String getNombre() {

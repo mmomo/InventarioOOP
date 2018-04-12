@@ -4,16 +4,12 @@ import java.io.IOException;
 
 public class Main {
     public static void main (String[] args) throws IOException {
-        Inventario i = new Inventario("inventario.csv");
-        Producto p = new Accesorio("borrador", "Dell", 249, 5);        
-        //i.agregarProducto(p);
+        Inventario i = new Inventario("inv.csv");
         
-        //p = new Accesorio("audifono", "Sony", 554, 3);
-        //i.agregarProducto(p);
-        
-        //p = new Accesorio("Memoria", "Kingston", 230, 3);
-        //i.agregarProducto(p);
-        i.mostrarInventario();
+        Producto p = new Computadora(2, "Laptop", "Lenovo", 14500, 2);
+        i.agregarProducto(p);
+        p.mostrarInfo();
+        //i.mostrarInventario();
         i.actualizarArchivo();
     }
 }
