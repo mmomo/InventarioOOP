@@ -18,6 +18,7 @@ public class Inventario {
     private BufferedWriter writer;
     private String linea = "";
     
+    private int id = 1;
     private double costoTotal;
 
     public Inventario(String archivo) throws IOException {
@@ -30,6 +31,7 @@ public class Inventario {
             
             while ((linea = f.readLine()) != null) {
                 String [] valores = linea.split(",");
+                this.id = Integer.parseInt(valores[5]) + 1;
                 
                 if (valores[0].equals(String.valueOf(Producto.Tipo.ACCESORIO))) {
                     this.productos.add(new Accesorio(Integer.parseInt(valores[5]), valores[1], valores[2], 
@@ -55,7 +57,17 @@ public class Inventario {
         return this.costoTotal;
     }
     
-    public void agregarProducto (Producto p) {
+    public void agregarProducto (Producto.Tipo tipo, String nombre, String marca, double costo, int cantidad) {
+        Producto p = null;
+        
+        if (tipo == Producto.Tipo.ACCESORIO) {
+            p = new Accesorio (this.id, nombre, marca, costo, cantidad);
+            this.id++;
+        } else if (tipo == Producto.Tipo.COMPUTADORA) {
+            p = new Computadora(this.id, nombre, marca, costo, cantidad);
+            this.id++;
+        }
+        
         this.productos.add(p);
     }
     
