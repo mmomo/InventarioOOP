@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Inventario {
@@ -56,6 +57,16 @@ public class Inventario {
     
     public void agregarProducto (Producto p) {
         this.productos.add(p);
+    }
+    
+    public void eliminarProducto (int id) {
+        for (Iterator<Producto> i = productos.listIterator(); i.hasNext();) {
+            Producto p = i.next();
+            if (p.getID() == id) {
+                i.remove();
+            }
+        }
+        //this.actualizarArchivo();
     }
     
     public void mostrarInventario () {
