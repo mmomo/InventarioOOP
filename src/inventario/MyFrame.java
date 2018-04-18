@@ -12,10 +12,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSplitPane;
@@ -29,15 +31,20 @@ public class MyFrame extends javax.swing.JFrame{
     private final JSplitPane splitPane;  
     private final JPanel topPanel;       
     private final JPanel bottomPanel;    
+    
     private final JTextField textFieldNombre;   
     private final JTextField textFieldMarca;
     private final JTextField textFieldCosto;
     private final JTextField textFieldCantidad;
+    
     private final JButton button;  
+    private final JButton buttonEliminar;
     private final JRadioButton accRadio;
     private final JRadioButton comRadio;
+
     private JTable table;
     private DefaultTableModel model;
+    
     private Inventario i;
     private List<Producto> lista;
     
@@ -60,6 +67,7 @@ public class MyFrame extends javax.swing.JFrame{
         textFieldCantidad = new JTextField();
         
         button = new JButton("Registrar"); 
+        buttonEliminar = new JButton("Eliminar");
         accRadio = new JRadioButton("Accesorio");
         comRadio = new JRadioButton("Computadora");
         
@@ -68,7 +76,22 @@ public class MyFrame extends javax.swing.JFrame{
         grupo.add(comRadio);
         accRadio.setSelected(true);
         
-        /* Cuando se presiona el boton */
+        /* Cuando se presiona el boton eliminar */
+        buttonEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                int id;
+                id = Integer.parseInt(JOptionPane.showInputDialog("ID:"));
+                
+                System.out.println(id);
+                List<Producto> l = i.getLista();
+                l.stream().filter((p) -> (p.getID() == id)).forEach((p) -> {
+                    System.out.println("Eliminar " + p.getNombre());
+                });
+            }
+        });
+        
+        /* Cuando se presiona el boton registrar*/
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -118,7 +141,7 @@ public class MyFrame extends javax.swing.JFrame{
         /* Configuracion de la ventana */
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Super inventario");
-        setPreferredSize(new Dimension(400, 400));     
+        setPreferredSize(new Dimension(400, 500));     
         getContentPane().setLayout(new GridLayout()); 
         getContentPane().add(splitPane);              
 
@@ -210,6 +233,7 @@ public class MyFrame extends javax.swing.JFrame{
         bottomPanel.add(inputCosto);
         bottomPanel.add(inputCantidad);
         bottomPanel.add(button);
+        bottomPanel.add(buttonEliminar);
         
         pack();   
     }
