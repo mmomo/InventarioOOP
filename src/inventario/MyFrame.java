@@ -22,6 +22,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
 
 public class MyFrame extends javax.swing.JFrame{
 
@@ -36,6 +37,7 @@ public class MyFrame extends javax.swing.JFrame{
     private final JRadioButton accRadio;
     private final JRadioButton comRadio;
     private JTable table;
+    private DefaultTableModel model;
     private Inventario i;
     private List<Producto> lista;
     
@@ -47,7 +49,7 @@ public class MyFrame extends javax.swing.JFrame{
         lista = i.getLista();
         
         for (int j = 0; j < lista.size(); j++)
-            System.out.println(lista.get(0).getNombre());
+            System.out.println(lista.get(j).getNombre());
 
         splitPane = new JSplitPane();
         topPanel = new JPanel();   
@@ -89,7 +91,8 @@ public class MyFrame extends javax.swing.JFrame{
                     Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-                i.getLista();
+                List<Producto> l;
+                l = i.getLista();
                 
                 // limpiar los textFields
                 textFieldNombre.setText("");
@@ -97,10 +100,18 @@ public class MyFrame extends javax.swing.JFrame{
                 textFieldCosto.setText("");
                 textFieldCantidad.setText("");
                 
-                Object [][] data = listaToArray(lista);
-                table = new JTable(data, cols);
                 
-                table.repaint();
+                
+                Object[] ok = new Object[5];
+                ok[0] = l.get(l.size() - 1).getID();
+                ok[1] = l.get(l.size() - 1).getNombre();
+                ok[2] = l.get(l.size() - 1).getMarca();
+                ok[3] = l.get(l.size() - 1).getCosto();
+                ok[4] = l.get(l.size() - 1).getCantidad();
+                
+                model.addRow(ok);
+                
+               
             }
         });
         
@@ -127,7 +138,16 @@ public class MyFrame extends javax.swing.JFrame{
 
         Object[][] data = listaToArray(lista);
         
-        table = new JTable(data, cols);
+        model  = new DefaultTableModel();
+        for (String s : cols) {
+            model.addColumn(s);
+        }
+        
+        for (Object[] o : data) {
+            model.addRow(o);
+        }
+        
+        table = new JTable(model);
         
         topPanel.setLayout(new BorderLayout());
         topPanel.add(table.getTableHeader(), BorderLayout.PAGE_START);

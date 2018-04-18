@@ -109,5 +109,9 @@ public class Inventario {
         }
         writer.close();
     }
+
+    public List<Producto> getLista() {
+        return this.productos;
+    }   
     
 }
