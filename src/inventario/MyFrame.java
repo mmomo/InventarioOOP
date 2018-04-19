@@ -112,16 +112,19 @@ public class MyFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int id = Integer.parseInt(JOptionPane.showInputDialog("ID: "));
+                int cantidad;
 
                 List<Producto> l = i.getLista();
                 for (Producto p : l) {
                     if (p.getID() == id) {
-                        if (p.getCantidad() > 0) {
-                            model.setValueAt(p.getCantidad() - 1, getRow(model, id), 4);
+                        cantidad = Integer.parseInt(JOptionPane.showInputDialog("Vender\nCantidad:"));
+                        
+                        if (p.getCantidad() > 0 && p.getCantidad() >= cantidad) {
+                            model.setValueAt(p.getCantidad() - cantidad, getRow(model, id), 4);
                             if (p.tipo == Producto.Tipo.ACCESORIO) {
-                                ((Accesorio) p).venta();
+                                ((Accesorio) p).venta(cantidad);
                             } else {
-                                ((Computadora) p).venta();
+                                ((Computadora) p).venta(cantidad);
                             }
                             try {
                                 i.actualizarArchivo();
