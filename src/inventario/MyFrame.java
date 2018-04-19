@@ -41,6 +41,7 @@ public class MyFrame extends javax.swing.JFrame {
     private final JButton button;
     private final JButton buttonVender;
     private final JButton buttonEliminar;
+    private final JButton buttonComprar;
     private final JRadioButton accRadio;
     private final JRadioButton comRadio;
 
@@ -71,6 +72,7 @@ public class MyFrame extends javax.swing.JFrame {
         button = new JButton("Registrar");
         buttonVender = new JButton("Vender");
         buttonEliminar = new JButton("Eliminar");
+        buttonComprar = new JButton("Comprar");
         accRadio = new JRadioButton("Accesorio");
         comRadio = new JRadioButton("Computadora");
 
@@ -79,6 +81,32 @@ public class MyFrame extends javax.swing.JFrame {
         grupo.add(comRadio);
         accRadio.setSelected(true);
 
+        /* Cuando se presiona el boton comprar */
+        buttonComprar.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                int id = Integer.parseInt(JOptionPane.showInputDialog("ID: "));
+                int cantidad;
+                
+                List<Producto> l = i.getLista();
+                for (Producto p : l) {
+                    if (p.getID() == id) {
+                        cantidad = Integer.parseInt(JOptionPane.showInputDialog("Comprar\nCantidad: "));
+                        if (cantidad > 0) {
+                            model.setValueAt(p.getCantidad() + cantidad, getRow(model, id), 4);                            
+                            p.setCantidad(p.getCantidad() + cantidad);
+                        }
+                    }
+                }
+                try {
+                    i.actualizarArchivo();
+                } catch (IOException ex) {
+                    Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
         /* Cuando se presiona el boton vender */
         buttonVender.addActionListener(new ActionListener() {
             @Override
@@ -263,6 +291,7 @@ public class MyFrame extends javax.swing.JFrame {
         bottomPanel.add(inputCantidad);
         bottomPanel.add(button);
         bottomPanel.add(new JSeparator());
+        bottomPanel.add(buttonComprar);
         bottomPanel.add(buttonEliminar);
         bottomPanel.add(buttonVender);
 
