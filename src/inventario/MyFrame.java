@@ -95,6 +95,11 @@ public class MyFrame extends javax.swing.JFrame {
                             } else {
                                 ((Computadora) p).venta();
                             }
+                            try {
+                                i.actualizarArchivo();
+                            } catch (IOException ex) {
+                                Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         } else {
                             JOptionPane.showMessageDialog(null, "No hay en existencia");
                         }
