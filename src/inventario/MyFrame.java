@@ -20,11 +20,13 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class MyFrame extends javax.swing.JFrame{
 
@@ -84,10 +86,15 @@ public class MyFrame extends javax.swing.JFrame{
                 id = Integer.parseInt(JOptionPane.showInputDialog("ID:"));
                 
                 System.out.println(id);
+                
                 List<Producto> l = i.getLista();
-                l.stream().filter((p) -> (p.getID() == id)).forEach((p) -> {
-                    System.out.println("Eliminar " + p.getNombre());
-                });
+                for (Producto p : l) {
+                    //i.eliminarProducto(id);
+                    if (p.getID() == id) {
+                        model.removeRow(getRow(model, id));
+                        JOptionPane.showMessageDialog(null, "Eliminado " + p.getNombre() + " " + p.getMarca());                        
+                    }
+                }
             }
         });
         
@@ -123,8 +130,6 @@ public class MyFrame extends javax.swing.JFrame{
                 textFieldCosto.setText("");
                 textFieldCantidad.setText("");
                 
-                
-                
                 Object[] ok = new Object[5];
                 ok[0] = l.get(l.size() - 1).getID();
                 ok[1] = l.get(l.size() - 1).getNombre();
@@ -132,9 +137,7 @@ public class MyFrame extends javax.swing.JFrame{
                 ok[3] = l.get(l.size() - 1).getCosto();
                 ok[4] = l.get(l.size() - 1).getCantidad();
                 
-                model.addRow(ok);
-                
-               
+                model.addRow(ok);                               
             }
         });
         
@@ -151,14 +154,8 @@ public class MyFrame extends javax.swing.JFrame{
         splitPane.setBottomComponent(bottomPanel);            
 
         
-        /* TAbla */
-        /*Object [][] data = {
-            { 1, "Mouse", "Sony", new Double(230), 10 },
-            { 2, "Teclado", "Dell", new Double(299), 3 },
-            { 3, "Laptop", "Toshiba", new Double(9999), 1 }
-        };
-        */
-
+        /* Tabla */
+    
         Object[][] data = listaToArray(lista);
         
         model  = new DefaultTableModel();
@@ -171,11 +168,16 @@ public class MyFrame extends javax.swing.JFrame{
         }
         
         table = new JTable(model);
+
+        JScrollPane pane = new JScrollPane(table);
         
         topPanel.setLayout(new BorderLayout());
         topPanel.add(table.getTableHeader(), BorderLayout.PAGE_START);
-        topPanel.add(table, BorderLayout.CENTER);
-        table.setEnabled(true);
+        topPanel.add(pane, BorderLayout.CENTER);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
+        
+        //table.setEnabled(true);
         
         table.getSelectionModel().addListSelectionListener((ListSelectionEvent event) -> {
             System.out.println("ok");
@@ -238,7 +240,7 @@ public class MyFrame extends javax.swing.JFrame{
         pack();   
     }
     
-    public Object[][] listaToArray (List<Producto> lista) {
+    private Object[][] listaToArray (List<Producto> lista) {
         Object [][] data = new Object[lista.size()][5];
         
         for (int j = 0; j < lista.size(); j++) {
@@ -250,6 +252,15 @@ public class MyFrame extends javax.swing.JFrame{
         }
         
         return data;
+    }
+    
+    private int getRow(TableModel model, Object valor) {
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+            if (model.getValueAt(i, 0).equals(valor)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static void main(String args[]){
