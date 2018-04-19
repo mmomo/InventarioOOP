@@ -19,7 +19,6 @@ public class Inventario {
     private String linea = "";
     
     private int id = 1;
-    private double costoTotal;
 
     public Inventario(String archivo) throws IOException {
         this.archivo = archivo;
@@ -52,11 +51,7 @@ public class Inventario {
             System.out.println("Listo");            
         }
     }
-    
-    public double getCostoTotal () {
-        return this.costoTotal;
-    }
-    
+
     public void agregarProducto (Producto.Tipo tipo, String nombre, String marca, double costo, int cantidad) {
         Producto p = null;
         
@@ -71,14 +66,14 @@ public class Inventario {
         this.productos.add(p);
     }
     
-    public void eliminarProducto (int id) {
+    public void eliminarProducto (int id) throws IOException {
         for (Iterator<Producto> i = productos.listIterator(); i.hasNext();) {
             Producto p = i.next();
             if (p.getID() == id) {
                 i.remove();
             }
         }
-        //this.actualizarArchivo();
+        this.actualizarArchivo();
     }
     
     public void mostrarInventario () {

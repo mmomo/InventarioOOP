@@ -17,5 +17,5 @@ public interface Vender {
         }
     }
     
-    abstract double venta ();
+    abstract void venta ();
 }
