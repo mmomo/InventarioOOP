@@ -23,7 +23,6 @@ import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -207,7 +206,7 @@ public class MyFrame extends javax.swing.JFrame {
         /* Configuracion de la ventana */
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Super inventario");
-        setPreferredSize(new Dimension(400, 500));
+        setPreferredSize(new Dimension(400, 430));
         getContentPane().setLayout(new GridLayout());
         getContentPane().add(splitPane);
 
@@ -290,10 +289,17 @@ public class MyFrame extends javax.swing.JFrame {
         bottomPanel.add(inputCantidad);
         bottomPanel.add(button);
         bottomPanel.add(new JSeparator());
-        bottomPanel.add(buttonComprar);
-        bottomPanel.add(buttonEliminar);
-        bottomPanel.add(buttonVender);
-
+        
+        /*Botones */
+        JPanel botones = new JPanel();       
+        botones.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
+        botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
+       
+        botones.add(buttonVender);
+        botones.add(buttonComprar);
+        botones.add(buttonEliminar);
+       
+        bottomPanel.add(botones);
         pack();
     }
 
