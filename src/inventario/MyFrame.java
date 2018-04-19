@@ -57,10 +57,6 @@ public class MyFrame extends javax.swing.JFrame {
         i = new Inventario("inventario.csv");
         lista = i.getLista();
 
-        for (int j = 0; j < lista.size(); j++) {
-            System.out.println(lista.get(j).getNombre());
-        }
-
         splitPane = new JSplitPane();
         topPanel = new JPanel();
         bottomPanel = new JPanel();
@@ -132,7 +128,7 @@ public class MyFrame extends javax.swing.JFrame {
                                 Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "No hay en existencia");
+                            JOptionPane.showMessageDialog(null, "No hay suficiente cantidad");
                         }
                     }
                 }
